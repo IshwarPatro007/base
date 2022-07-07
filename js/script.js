@@ -124,6 +124,9 @@ $(function () {
   console.log(v.val());
 
   let galleryImage = $(`.gallery`).find(`img`).first();
+  $(`html`).on(`click keydown`, function () {
+    console.log(`Mouse is clicked`);
+  });
   let images = [
     "images/laptop-mobile_small.jpg",
     "images/laptop-on-table_small.jpg",
@@ -132,14 +135,22 @@ $(function () {
   ];
 
   let count = 0;
-  setInterval(function () {
+  function imagenext() {
+    $(this).attr(`src`, images[count]).fadeIn();
+  }
+  function switchnext() {
     count = (count + 1) % images.length;
-    galleryImage.fadeOut(function () {
-      $(this).attr(`src`, images[count]);
-      $(this).fadeIn();
-    });
-    console.log(galleryImage.attr(`src`));
-  }, 2500);
+    galleryImage.fadeOut(imagenext);
+  }
+  // setInterval(function () {
+  //   count = (count + 1) % images.length;
+  //   galleryImage.fadeOut(function () {
+  //     $(this).attr(`src`, images[count]);
+  //     $(this).fadeIn();
+  //   });
+  //   console.log(galleryImage.attr(`src`));
+  // }, 2500);
+  galleryImage.on(`click`, switchnext);
   //------------------DOM2--------------------//
   let firstP = $(`p:first`);
   console.log(firstP.text());
@@ -147,7 +158,23 @@ $(function () {
 
   firstP.html(`<h1><strong>Hello World!!</strong><h1>`);
   //------------------EVENT HANDELING----------//
-  $(`#btn-click`).click(function () {
+  $(`#btn-click`).click(function (event) {
+    console.log(event);
     alert(`A button was clicked`);
   });
+  $(`.red-box, .blue-box, .green-box`).click(function () {
+    $(this).fadeTo(500, 0.2);
+  });
+  $(`.red-box, .blue-box, .green-box`).click(function () {
+    $(this).fadeTo(500, 1);
+  });
+  $(`p`).mouseenter(function () {
+    $(this).fadeTo(500, 1).css(`background-color`, `#01f010`);
+  });
+  $(`p`).mouseleave(function () {
+    $(this).fadeTo(500, 0.7).css("background-color", "#228b22");
+  });
+  // $(`p`).hover(function () {
+  //   $(this).fadeTo(500, 1);
+  // });
 });
