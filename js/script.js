@@ -291,9 +291,13 @@ $(function () {
           let pokemonDiv = $(`#pokemon-details`);
           pokemonDiv.empty();
           pokemonDiv.append(`<h2>` + name + `</h2>`);
+
           pokemonDiv.append(
             `<img src='` + details.sprites.front_default + `'>`
           );
+          pokemonDiv.append(`<img src='` + details.sprites.back_default + `'>`);
+          pokemonDiv.append(`<img src='` + details.sprites.front_shiny + `'>`);
+          pokemonDiv.append(`<img src='` + details.sprites.back_shiny + `'>`);
         });
         event.preventDefault();
       });
