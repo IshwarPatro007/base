@@ -16,50 +16,50 @@ $(function () {
   //   });
   // $(`.lightbox`).delay(500).fadeIn(1000);
   //---------------box swap-------------------//
-  setInterval(function () {
-    $(`.blue-box`).animate(
-      {
-        "margin-left": "-=330px",
-        opacity: "1",
-      },
-      1000,
-      "linear"
-    );
-    $(`.red-box`).delay(1000).animate(
-      {
-        "margin-left": "+=420px",
-        opacity: "1",
-      },
-      1000
-    );
-    $(`.green-box`).delay(2000).animate(
-      {
-        "margin-left": "-=220px",
-        opacity: "1",
-      },
-      1000
-    );
-    ////
-    $(`.blue-box`).delay(3000).animate(
-      {
-        "margin-left": "+=330px",
-      },
-      1000,
-      "linear"
-    );
-    $(`.red-box`).delay(4000).animate(
-      {
-        "margin-left": "-=420px",
-      },
-      1000
-    );
-    $(`.green-box`).delay(5000).animate(
-      {
-        "margin-left": "+=220px",
-      },
-      1000
-    );
-  }, 15000);
+  // setInterval(function () {
+  //   $(`.blue-box`).animate(
+  //     {
+  //       "margin-left": "-=330px",
+  //       opacity: "1",
+  //     },
+  //     1000,
+  //     "linear"
+  //   );
+  //   $(`.red-box`).delay(1000).animate(
+  //     {
+  //       "margin-left": "+=420px",
+  //       opacity: "1",
+  //     },
+  //     1000
+  //   );
+  //   $(`.green-box`).delay(2000).animate(
+  //     {
+  //       "margin-left": "-=220px",
+  //       opacity: "1",
+  //     },
+  //     1000
+  //   );
+  //   ////
+  //   $(`.blue-box`).delay(3000).animate(
+  //     {
+  //       "margin-left": "+=330px",
+  //     },
+  //     1000,
+  //     "linear"
+  //   );
+  //   $(`.red-box`).delay(4000).animate(
+  //     {
+  //       "margin-left": "-=420px",
+  //     },
+  //     1000
+  //   );
+  //   $(`.green-box`).delay(5000).animate(
+  //     {
+  //       "margin-left": "+=220px",
+  //     },
+  //     1000
+  //   );
+  // }, 15000);
 
   //---------------CSS in JS------------------//
   $(`.red-box,.green-box,.blue-box`).css(`border-radius`, `55px`);
@@ -240,8 +240,64 @@ $(function () {
     validateEmailField(email, event);
     validatePasswordField(password, event);
   });
-});
 
+  //---------------------jQueryAjax---------------//
+
+  // $(`#code`).load(`css/style.css`);
+
+  //-----------------------flickr API-------------//
+  let flickrApiURL = `https://www.flickr.com/services/feeds/photos_public.gne?jsoncallback=?`;
+
+  $.getJSON(flickrApiURL, {
+    //Options....
+    tags: `thunder, rain, dark`,
+    tagnode: `all`,
+    format: `json`,
+  })
+    .done(function (data) {
+      //Sucessful....
+      // console.log(data);
+      $.each(data.items, function (index, item) {
+        // console.log(item);
+        $(`<img>`).attr("src", item.media.m).appendTo(`#flickr`);
+
+        if (index == 4) {
+          return false;
+        }
+      });
+    })
+    .fail(function () {
+      //Failure....
+      alert(`Ajax call failed`);
+    });
+  //---------------------POKE API-----------------------//
+  var pokeapiURL = `https://pokeapi.co/api/v2/generation/3`;
+
+  $.getJSON(pokeapiURL).done(function (data) {
+    // console.log(data);
+    $.each(data.pokemon_species, function (index, pokemon) {
+      let name = pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1);
+      if (name == "Jirachi") {
+        name.toUpperCase();
+      }
+      let li = $(`<li>`).html(
+        "Pokemon species no. " + (index + 1) + " is " + name
+      );
+      li.appendTo(`#pokemon`);
+    });
+  });
+});
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
 function enableFastFeedback(formElement) {
   let nameInput = formElement.find(`#name`);
   let emailInput = formElement.find(`#email`);
