@@ -120,16 +120,41 @@
           </ul>
         </li>
       </ul>
-      <form action="">
-        <input type="text" /><br />
-        <input type="email" /><br />
-        <input type="password" /><br />
-        <input type="range" min="1" max="10" value="7" /><br />
-        <input type="checkbox" name="cb" checked /><label for="cb"
+      <form id="form" action="">
+        <input id="name" type="text" placeholder="Name" />
+        <span id="name-feedback"></span><br />
+
+        <input id="email" type="email" placeholder="example@gmail.com" />
+        <span id="email-feedback"></span><br />
+
+        <input id="password" type="password" placeholder="Password" />
+        <span id="password-feedback"></span><br />
+
+        <input id="amount" type="range" min="1" max="10" value="7" /><br />
+
+        <input id="checkbox" type="checkbox" name="cb" checked /><label for="cb"
           >Check Box</label
-        ><br />
-        <textarea name="" id="" cols="30" rows="10"></textarea><br />
-        <input type="submit" value="submit" /><br />
+        >
+        <span id="checkbox-feedback"></span><br />
+        <textarea
+          id="message"
+          name=""
+          cols="30"
+          rows="10"
+          placeholder="Enter Comments"
+        ></textarea>
+        <span id="message-feedback"></span><br />
+
+        <!-- <select name="" id="selection">
+          <option value="">Option 1</option>
+          <option value="">Option 2</option>
+          <option value="">Option 3</option>
+          <option value="">Option 4</option>
+        </select> -->
+        <input id="submit" type="submit" value="submit" />
+        <!-- <button id="submit" value="submit" type="button" onSubmit="{submitHandler}">
+          Login
+        </button> -->
       </form>
     </div>
     <div class="lightbox">

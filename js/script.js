@@ -150,6 +150,7 @@ $(function () {
   //   });
   //   console.log(galleryImage.attr(`src`));
   // }, 2500);
+
   galleryImage.on(`click`, switchnext);
   //------------------DOM2--------------------//
   let firstP = $(`p:first`);
@@ -174,7 +175,143 @@ $(function () {
   $(`p`).mouseleave(function () {
     $(this).fadeTo(500, 0.7).css("background-color", "#228b22");
   });
-  // $(`p`).hover(function () {
-  //   $(this).fadeTo(500, 1);
-  // });
+
+  $(`p`).hover(function () {
+    $(this).fadeTo(500, 1);
+  });
+
+  $(`html`).keydown(function (event) {
+    console.log(event.which);
+  });
+
+  let ARROW_RIGHT = 39;
+  let ARROW_LEFT = 37;
+
+  $(`html`).keydown(function (event) {
+    if (event.which == ARROW_RIGHT) {
+      $(`.blue-box`).stop().animate(
+        {
+          marginLeft: `+=5px`,
+        },
+        50
+      );
+      // $(`.green-box`).click().stop().animate(
+      //   {
+      //     marginLeft: `+=5px`,
+      //   },
+      //   50
+      // );
+      // $(`.red-box`).click().stop().animate(
+      //   {
+      //     marginLeft: `+=5px`,
+      //   },
+      //   50
+      // );
+    }
+  });
+  $(`html`).keydown(function (event) {
+    if (event.which == ARROW_LEFT) {
+      $(`.blue-box`).stop().animate(
+        {
+          marginLeft: `-=5px`,
+        },
+        50
+      );
+    }
+  });
+
+  let inputFields = $(`input:text, input:password, textarea`);
+
+  inputFields.focus(function () {
+    $(this).css(`box-shadow`, `#666`);
+  });
+  let submit = $(`#submit`);
+  let form = $(`#form`);
+  enableFastFeedback(form);
+
+  form.submit(function (event) {
+    let name = $(`#name`).val();
+    let email = $(`#email`).val();
+    let password = $(`#password`).val();
+    let message = $(`#message`).val();
+    let checkbox = $(`#checkbox`).is(`:checked`);
+
+    validateNameField(name, event);
+    validateEmailField(email, event);
+    validatePasswordField(password, event);
+  });
 });
+
+function enableFastFeedback(formElement) {
+  let nameInput = formElement.find(`#name`);
+  let emailInput = formElement.find(`#email`);
+  let passwordInput = formElement.find(`#password`);
+  let messageInput = formElement.find(`#message`);
+  let checkboxInput = formElement.find(`#checkbox`);
+
+  nameInput.blur(function (event) {
+    let name = $(this).val();
+    validateNameField(name, event);
+
+    if (!isValidName(name)) {
+      $(this).css({ "box-shadow": "0 0 5px #811", border: "1px solid #600" });
+    } else {
+      $(this).css({ "box-shadow": "0 0 5px #180", border: "1px solid #180" });
+    }
+  });
+
+  passwordInput.blur(function (event) {
+    let password = $(this).val();
+    validatePasswordField(password, event);
+
+    if (!isValidPassword(password)) {
+      $(this).css({ "box-shadow": "0 0 5px #811", border: "1px solid #600" });
+    } else {
+      $(this).css({ "box-shadow": "0 0 5px #180", border: "1px solid #180" });
+    }
+  });
+}
+
+function validateNameField(name, event) {
+  if (!isValidName(name)) {
+    $(`#name-feedback`).text(`Please enter at least three characters`);
+    event.preventDefault();
+  } else {
+    $(`#name-feedback`).text(``);
+  }
+}
+
+function isValidName(name) {
+  return name.length >= 3;
+}
+
+function validatePasswordField(Password, event) {
+  if (!isValidPassword(Password)) {
+    $(`#password-feedback`).text(`Please enter at least 6-characters`);
+    event.preventDefault();
+  } else {
+    $(`#password-feedback`).text(``);
+  }
+}
+
+function isValidPassword(Password) {
+  return Password.length >= 6;
+}
+
+function validateEmailField(mail, event) {
+  if (!isValidEmail(mail)) {
+    $(`#email-feedback`).text(`Please enter a proper Email id`);
+    event.preventDefault();
+  } else {
+    $(`#email-feedback`).text(``);
+  }
+}
+
+function isValidEmail(mail) {
+  for (var i = 0; i < mail.length; i++) {
+    if (mail[i] == `@`) {
+      return true;
+    }
+  }
+  return false;
+}
